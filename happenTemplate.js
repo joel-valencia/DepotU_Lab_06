@@ -157,8 +157,10 @@ var library = (function() {
                             day = day + "st";
                         } else if (onesDigit == "2") {
                             day = day + "nd";
-                        } else {
+                        } else if (onesDigit == "3") {
                             day = day + "rd";
+                        } else {
+                            day = day + "th";
                         }
                         return day;
                     },
@@ -214,8 +216,10 @@ var library = (function() {
                             dayOfYear = dayOfYear + "st";
                         } else if (onesDigit == "2") {
                             dayOfYear = dayOfYear + "nd";
-                        } else {
+                        } else if (onesDigit == "3") {
                             dayOfYear = dayOfYear + "rd";
+                        } else {
+                            dayOfYear = dayOfYear + "th";
                         }
                         return dayOfYear;
                     }
