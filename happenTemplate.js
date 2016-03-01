@@ -2,46 +2,114 @@ var library = (function() {
   return {
 	TimeStamp: (function(){
    	  return {
-		UnixTimestamp: function(){},
-		UnixMillisecond: function(){}
+		UnixTimestamp: function(){
+            var ms = new Date().getTime();
+            return String(Math.floor(ms / 1000));
+        },
+		UnixMillisecond: function(){
+            var ms = new Date().getTime();
+            return ms;
+        }
 	  }
 	})(),
 	Local: (function(){
 	  return {
 		Time: (function() {
 		  return {
-	  	    WithSeconds: function(){},
-	   	    WithOutSeconds: function() {}
+	  	    WithSeconds: function(){
+                   var hour = library.Hour.TwelveHour();
+                   var minute = library.Minute.DblDigit();
+                   var second = library.Second.DblDigit();
+                   var period = library.Hour.AMPM.UpperCase();
+                   return hour + ":" + minute + ":" + second + " " + period;
+                },
+	   	    WithOutSeconds: function() {
+                   var hour = library.Hour.TwelveHour();
+                   var minute = library.Minute.DblDigit();
+                   var period = library.Hour.AMPM.UpperCase();
+                   return hour + ":" + minute + " " + period;
+               }
 		  }
 		})(),
 		MDY: (function(){
 	  	  return {
-		    Numeral: function(){},
-			Name: function(){}
+		    Numeral: function(){
+                var month = library.Month.MonthNumber();
+                var day = library.Month.DateOfMonth.Numeral();
+                var year = library.Year.YearFull();
+                return month + "/" + day + "/" + year;
+            },
+			Name: function(){
+                var month = library.Month.CurrentMonth();
+                var day = library.Month.DateOfMonth.Numeral();
+                var year = library.Year.YearFull();
+                return month + " " + day + ", " + year;
+            }
 		  }
 		  })(),
 		}
 	})(),
 	Second: (function(){
 		return{
-			Second: function(){},
-			DblDigit: function(){}
+			Second: function(){
+                var second = new Date().getSeconds();
+                return String(second);
+            },
+			DblDigit: function(){
+                var second = new Date().getSeconds();
+                if (second < 10) {
+                    return String("0" + second);
+                } else {
+                    return String(second);
+                }
+            }
 		}
 	})(),
 	Minute: (function(){
 		return{
-			Minute: function(){},
-			DblDigit: function(){}
+			Minute: function(){
+                var minute = new Date().getMinutes();
+                return String(minute);
+            },
+			DblDigit: function(){
+                var minute = new Date().getMinutes();
+                if (minute < 10) {
+                    return String("0" + minute);
+                } else {
+                    return String(minute);
+                }
+            }
 		}
 	})(),
 	Hour: (function(){
 		return {
-			TwentyFourHour: function() {},
-			TwelveHour: function() {},
+			TwentyFourHour: function() {
+                var hour = new Date().getHours();
+                return String(hour);
+            },
+			TwelveHour: function() {
+                var hour = new Date().getHours();
+                if (hour > 12) {
+                    return String(hour - 12);
+                } else {
+                    return String(hour);
+                }
+            },
 			AMPM: (function() {
 				return {
-					UpperCase: function(){},
-					LowerCase: function(){}
+					UpperCase: function(){
+                        var hour = new Date().getHours();
+                        if (hour >= 12) {
+                            var period  = "PM";
+                        } else {
+                            var period = "PM";
+                        }
+                        return period;
+                    },
+					LowerCase: function(){
+                        var period = library.Hour.AMPM.UpperCase();
+                        return period.toLowerCase();
+                    }
 				}
 			})()
 		}
@@ -97,9 +165,10 @@ var library = (function() {
 					DateDblDigit: function(){
                         var day = new Date().getDate();
                         if (day < 10) {
-                            day = "0" + day;
+                            return "0" + day;
+                        } else {
+                            return day;
                         }
-                        return day;
                         }
 				    }
 			})(),
@@ -162,6 +231,19 @@ var library = (function() {
             }
 		}
 	})(),
-	Defaults: function(){}
+	Defaults: function(){
+        var year = library.Year.YearFull();
+        var month = library.Month.MonthNumberDblDigit();
+        var day = library.Month.DateOfMonth.DateDblDigit();
+        
+        var hour = library.Hour.TwelveHour();
+        var minute = library.Minute.DblDigit();
+        var second = library.Second.DblDigit();
+        
+        var date = year + "-" + month + "-" + day;
+        var time = hour + ":" + minute + ":" + second;
+        
+        return date + "T" + time;
+    }
   }
 })();
