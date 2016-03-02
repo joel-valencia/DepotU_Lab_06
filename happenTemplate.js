@@ -135,9 +135,9 @@ var library = (function() {
                 jan1DayOfWeek.setMonth(0);
                 jan1DayOfWeek.setDate(1);
                 var daysInFirstWeek = 7 - jan1DayOfWeek.getDay();
-                var week = (today - daysInFirstWeek) / 7;
+                var week = ((today - daysInFirstWeek) / 7) + 1;
 
-                return String(Math.ceil(week));
+                return String(Math.floor(week));
             }
 		}
 	})(),
