@@ -102,7 +102,7 @@ var library = (function() {
                         if (hour >= 12) {
                             var period  = "PM";
                         } else {
-                            var period = "PM";
+                            var period = "AM";
                         }
                         return period;
                     },
@@ -236,9 +236,13 @@ var library = (function() {
         var month = library.Month.MonthNumberDblDigit();
         var day = library.Month.DateOfMonth.DateDblDigit();
         
-        var hour = library.Hour.TwelveHour();
+        var hour = parseInt(library.Hour.TwelveHour(), 10);
         var minute = library.Minute.DblDigit();
         var second = library.Second.DblDigit();
+        
+        if (hour < 10) {
+            hour = "0" + String(hour);
+        }
         
         var date = year + "-" + month + "-" + day;
         var time = hour + ":" + minute + ":" + second;
